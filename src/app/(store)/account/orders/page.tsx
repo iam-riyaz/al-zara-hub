@@ -6,6 +6,9 @@ import { formatPrice, formatDate } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Package, ArrowLeft, ArrowRight } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function OrdersHistoryPage() {
   const user = await getCurrentUser();
   if (!user) redirect("/login?redirect=/account/orders");

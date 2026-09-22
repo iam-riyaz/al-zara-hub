@@ -10,6 +10,9 @@ interface OrderDetailPageProps {
   params: Promise<{ id: string }>;
 }
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function OrderDetailPage({ params }: OrderDetailPageProps) {
   const user = await getCurrentUser();
   if (!user) redirect("/login");

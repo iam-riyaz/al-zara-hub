@@ -3,6 +3,9 @@ import { requireAdmin } from "@/lib/auth/rbac";
 import { formatDate } from "@/lib/utils";
 import { FileText, Shield } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function AdminAuditLogsPage() {
   await requireAdmin();
   const logs = await AuditService.list(50);

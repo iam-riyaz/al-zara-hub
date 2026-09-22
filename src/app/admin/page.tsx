@@ -4,6 +4,9 @@ import { formatPrice, formatDate } from "@/lib/utils";
 import { DollarSign, ShoppingBag, Package, Users, AlertTriangle, Clock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function AdminOverviewPage() {
   const metrics = await AdminAnalyticsService.getOverviewMetrics();
 
@@ -99,25 +102,35 @@ export default async function AdminOverviewPage() {
           </div>
 
           <div className="divide-y divide-zinc-100 dark:divide-zinc-800 text-xs">
-            {metrics.recentOrders.map((o: any) => (
-              <div key={o.id} className="py-3 flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono font-bold text-zinc-900 dark:text-white">{o.orderNumber}</span>
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
-                      {o.status}
-                    </span>
+            {metrics.recentOrders.length === 0 ? (
+              <p className="py-6 text-center text-zinc-400">No orders placed yet.</p>
+            ) : (
+              metrics.recentOrders.map((o: any) => {
+                const customerName = o.user?.firstName
+                  ? `${o.user.firstName} ${o.user.lastName || ""}`.trim()
+                  : o.user?.email || "Customer";
+
+                return (
+                  <div key={o.id} className="py-3 flex items-center justify-between">
+                    <div className="space-y-0.5">
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono font-bold text-zinc-900 dark:text-white">{o.orderNumber}</span>
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+                          {o.status}
+                        </span>
+                      </div>
+                      <p className="text-zinc-500">
+                        {customerName} {o.user?.email ? `(${o.user.email})` : ""}
+                      </p>
+                    </div>
+                    <div className="text-right space-y-0.5">
+                      <p className="font-bold text-zinc-900 dark:text-white">{formatPrice(Number(o.totalAmount))}</p>
+                      <p className="text-[10px] text-zinc-400">{formatDate(o.createdAt)}</p>
+                    </div>
                   </div>
-                  <p className="text-zinc-500">
-                    {o.user?.firstName} {o.user?.lastName} ({o.user?.email})
-                  </p>
-                </div>
-                <div className="text-right space-y-0.5">
-                  <p className="font-bold text-zinc-900 dark:text-white">{formatPrice(Number(o.totalAmount))}</p>
-                  <p className="text-[10px] text-zinc-400">{formatDate(o.createdAt)}</p>
-                </div>
-              </div>
-            ))}
+                );
+              })
+            )}
           </div>
         </div>
 
@@ -131,17 +144,21 @@ export default async function AdminOverviewPage() {
           </div>
 
           <div className="divide-y divide-zinc-100 dark:divide-zinc-800 text-xs">
-            {metrics.topProducts.map((tp: any, idx: number) => (
-              <div key={idx} className="py-3 flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <p className="font-semibold text-zinc-900 dark:text-white">{tp.productName}</p>
-                  <p className="text-zinc-500">Units Sold: {tp._sum.quantity || 0}</p>
+            {metrics.topProducts.length === 0 ? (
+              <p className="py-6 text-center text-zinc-400">No product sales yet.</p>
+            ) : (
+              metrics.topProducts.map((tp: any, idx: number) => (
+                <div key={idx} className="py-3 flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <p className="font-semibold text-zinc-900 dark:text-white">{tp.productName}</p>
+                    <p className="text-zinc-500">Units Sold: {tp._sum.quantity || 0}</p>
+                  </div>
+                  <span className="font-bold text-emerald-600 dark:text-emerald-400">
+                    {formatPrice(Number(tp._sum.totalAmount || 0))}
+                  </span>
                 </div>
-                <span className="font-bold text-emerald-600 dark:text-emerald-400">
-                  {formatPrice(Number(tp._sum.totalAmount || 0))}
-                </span>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </div>

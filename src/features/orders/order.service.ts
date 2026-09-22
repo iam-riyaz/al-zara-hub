@@ -387,4 +387,49 @@ export class OrderService {
       },
     });
   }
+
+  static async getAdminOrders(params?: {
+    status?: OrderStatus;
+    search?: string;
+    take?: number;
+    skip?: number;
+  }) {
+    const { status, search, take = 50, skip = 0 } = params || {};
+    const where: any = {};
+
+    if (status) {
+      where.status = status;
+    }
+
+    if (search && search.trim()) {
+      const q = search.trim();
+      where.OR = [
+        { orderNumber: { contains: q, mode: "insensitive" } },
+        { user: { email: { contains: q, mode: "insensitive" } } },
+        { user: { firstName: { contains: q, mode: "insensitive" } } },
+        { user: { lastName: { contains: q, mode: "insensitive" } } },
+      ];
+    }
+
+    return prisma.order.findMany({
+      where,
+      orderBy: { createdAt: "desc" },
+      take,
+      skip,
+      include: {
+        user: {
+          select: {
+            id: true,
+            email: true,
+            firstName: true,
+            lastName: true,
+            phone: true,
+          },
+        },
+        items: true,
+        addresses: true,
+        payments: true,
+      },
+    });
+  }
 }
