@@ -1,0 +1,72 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: alzara
+          POSTGRES_PASSWORD: alzara_password
+          POSTGRES_DB: alzara_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+        env:
+          DATABASE_URL: "postgresql://alzara:alzara_password@localhost:5432/alzara_db?schema=public"
+
+      - name: Run Prisma Database Migrations
+        run: npx prisma migrate deploy
+        env:
+          DATABASE_URL: "postgresql://alzara:alzara_password@localhost:5432/alzara_db?schema=public"
+
+      - name: Seed Database
+        run: npm run db:seed
+        env:
+          DATABASE_URL: "postgresql://alzara:alzara_password@localhost:5432/alzara_db?schema=public"
+
+      - name: Typecheck TypeScript
+        run: npm run typecheck
+
+      - name: Run Unit & Integration Tests
+        run: npm run test
+        env:
+          DATABASE_URL: "postgresql://alzara:alzara_password@localhost:5432/alzara_db?schema=public"
+          JWT_SECRET: "ci_pipeline_jwt_secret_key_minimum_32_chars_long"
+          SESSION_SECRET: "ci_pipeline_session_secret_key_minimum_32_chars"
+
+      - name: Build Next.js Application
+        run: npm run build
+        env:
+          DATABASE_URL: "postgresql://alzara:alzara_password@localhost:5432/alzara_db?schema=public"
+          JWT_SECRET: "ci_pipeline_jwt_secret_key_minimum_32_chars_long"
+          SESSION_SECRET: "ci_pipeline_session_secret_key_minimum_32_chars"
+          NEXT_PUBLIC_APP_URL: "http://localhost:3000"
