@@ -2,7 +2,8 @@ import Link from "next/link";
 import { ProductService } from "@/features/products/product.service";
 import { CategoryService } from "@/features/categories/category.service";
 import { ProductCard } from "@/components/storefront/product-card";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { ArrowRight, Sparkles, Star, Zap, Shield, Heart } from "lucide-react";
 
 export const revalidate = 60; // ISR cache revalidation every 60s
@@ -38,16 +39,18 @@ export default async function HomePage() {
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
-                <Link href="/products">
-                  <Button size="lg" className="w-full sm:w-auto font-semibold gap-2 shadow-lg shadow-emerald-600/20">
-                    <span>Explore All Collections</span>
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
+                <Link
+                  href="/products"
+                  className={cn(buttonVariants({ size: "lg" }), "w-full sm:w-auto font-semibold gap-2 shadow-lg shadow-emerald-600/20")}
+                >
+                  <span>Explore All Collections</span>
+                  <ArrowRight className="h-4 w-4" />
                 </Link>
-                <Link href="/products?category=audio-headphones">
-                  <Button variant="outline" size="lg" className="w-full sm:w-auto font-semibold">
-                    Browse Audio Gear
-                  </Button>
+                <Link
+                  href="/products?category=audio-headphones"
+                  className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full sm:w-auto font-semibold")}
+                >
+                  Browse Audio Gear
                 </Link>
               </div>
 
@@ -94,10 +97,11 @@ export default async function HomePage() {
                   </p>
                   <div className="pt-2 flex items-center justify-between">
                     <span className="text-xl font-bold text-zinc-900 dark:text-white">$299.99</span>
-                    <Link href="/products/aura-pro-wireless-anc-headphones">
-                      <Button size="sm" className="text-xs font-semibold">
-                        View Product
-                      </Button>
+                    <Link
+                      href="/products/aura-pro-wireless-anc-headphones"
+                      className={cn(buttonVariants({ size: "sm" }), "text-xs font-semibold")}
+                    >
+                      View Product
                     </Link>
                   </div>
                 </div>
@@ -188,10 +192,11 @@ export default async function HomePage() {
               Apply promotional code <span className="font-mono font-bold bg-white/10 px-2 py-0.5 rounded text-emerald-300">WELCOME10</span> at checkout for instant savings across all departments.
             </p>
             <div className="pt-2">
-              <Link href="/products">
-                <Button size="lg" className="bg-white text-zinc-900 hover:bg-zinc-100 font-semibold shadow-md">
-                  Shop Curated Pieces Now
-                </Button>
+              <Link
+                href="/products"
+                className={cn(buttonVariants({ size: "lg" }), "bg-white text-zinc-900 hover:bg-zinc-100 font-semibold shadow-md")}
+              >
+                Shop Curated Pieces Now
               </Link>
             </div>
           </div>

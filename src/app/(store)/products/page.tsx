@@ -2,7 +2,8 @@ import Link from "next/link";
 import { ProductService } from "@/features/products/product.service";
 import { CategoryService } from "@/features/categories/category.service";
 import { ProductCard } from "@/components/storefront/product-card";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Filter, SlidersHorizontal, ArrowUpDown, X } from "lucide-react";
 
 interface ProductsPageProps {
@@ -165,10 +166,11 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
               <p className="text-xs text-zinc-500 mt-1 max-w-sm mx-auto">
                 No items match your active filters. Try broadening your criteria or reset filters.
               </p>
-              <Link href="/products" className="mt-4 inline-block">
-                <Button size="sm" variant="outline">
-                  Clear All Filters
-                </Button>
+              <Link
+                href="/products"
+                className={cn(buttonVariants({ size: "sm", variant: "outline" }), "mt-4 inline-block")}
+              >
+                Clear All Filters
               </Link>
             </div>
           ) : (
@@ -183,16 +185,22 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           {totalPages > 1 && (
             <div className="flex items-center justify-center gap-2 pt-8">
               {hasPrevPage && (
-                <Link href={`/products?${new URLSearchParams({ ...params, page: (page - 1).toString() }).toString()}`}>
-                  <Button variant="outline" size="sm">Previous</Button>
+                <Link
+                  href={`/products?${new URLSearchParams({ ...params, page: (page - 1).toString() }).toString()}`}
+                  className={buttonVariants({ variant: "outline", size: "sm" })}
+                >
+                  Previous
                 </Link>
               )}
               <span className="text-xs text-zinc-500 font-medium px-2">
                 Page {page} of {totalPages}
               </span>
               {hasNextPage && (
-                <Link href={`/products?${new URLSearchParams({ ...params, page: (page + 1).toString() }).toString()}`}>
-                  <Button variant="outline" size="sm">Next</Button>
+                <Link
+                  href={`/products?${new URLSearchParams({ ...params, page: (page + 1).toString() }).toString()}`}
+                  className={buttonVariants({ variant: "outline", size: "sm" })}
+                >
+                  Next
                 </Link>
               )}
             </div>

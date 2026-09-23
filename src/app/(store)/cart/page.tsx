@@ -4,8 +4,8 @@ import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Trash2, ShoppingBag, ArrowRight, ShieldCheck, Tag } from "lucide-react";
-import { formatPrice } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { formatPrice, cn } from "@/lib/utils";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/features/cart/cart-context";
 
@@ -102,10 +102,11 @@ export default function CartPage() {
           You haven&apos;t added any items to your bag yet. Explore our curated collections to get started.
         </p>
         <div className="pt-2">
-          <Link href="/products">
-            <Button size="lg" className="font-semibold">
-              Explore Products
-            </Button>
+          <Link
+            href="/products"
+            className={cn(buttonVariants({ size: "lg" }), "font-semibold")}
+          >
+            Explore Products
           </Link>
         </div>
       </div>
@@ -221,11 +222,12 @@ export default function CartPage() {
             </div>
           </div>
 
-          <Link href="/checkout" className="block">
-            <Button size="lg" className="w-full font-semibold gap-2 shadow-lg shadow-emerald-600/20">
-              <span>Proceed to Checkout</span>
-              <ArrowRight className="h-4 w-4" />
-            </Button>
+          <Link
+            href="/checkout"
+            className={cn(buttonVariants({ size: "lg" }), "w-full font-semibold gap-2 shadow-lg shadow-emerald-600/20 flex items-center justify-center")}
+          >
+            <span>Proceed to Checkout</span>
+            <ArrowRight className="h-4 w-4" />
           </Link>
 
           {/* Trust guarantee */}

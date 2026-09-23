@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db/prisma";
 import { CheckCircle2, Package, Truck, ArrowRight, ShoppingBag } from "lucide-react";
 import { formatPrice, formatDate } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 interface ConfirmationPageProps {
   params: Promise<{ orderNumber: string }>;
@@ -61,11 +61,11 @@ export default async function OrderConfirmationPage({ params }: ConfirmationPage
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <Link href="/account/orders">
-            <Button variant="outline" size="sm">View All Orders</Button>
+          <Link href="/account/orders" className={buttonVariants({ variant: "outline", size: "sm" })}>
+            View All Orders
           </Link>
-          <Link href="/products">
-            <Button size="sm">Continue Shopping</Button>
+          <Link href="/products" className={buttonVariants({ size: "sm" })}>
+            Continue Shopping
           </Link>
         </div>
       </div>

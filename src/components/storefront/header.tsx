@@ -4,7 +4,8 @@ import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ShoppingBag, Heart, Search, User, LogOut, Shield, Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { useCart } from "@/features/cart/cart-context";
 import { useWishlist } from "@/features/wishlist/wishlist-context";
@@ -88,66 +89,77 @@ export function Header({ currentUser }: HeaderProps) {
             <ThemeToggle />
 
             {/* Wishlist Link */}
-            <Link href="/wishlist">
-              <Button variant="ghost" size="icon" className="relative" aria-label="Wishlist">
-                <Heart className="h-5 w-5 text-zinc-700 dark:text-zinc-300" />
-                {wishlistCount > 0 && (
-                  <span className="absolute -top-1 -right-1 h-4 min-w-4 px-1 rounded-full bg-emerald-600 text-[10px] font-bold text-white flex items-center justify-center">
-                    {wishlistCount}
-                  </span>
-                )}
-              </Button>
+            <Link
+              href="/wishlist"
+              className={cn(buttonVariants({ variant: "ghost", size: "icon" }), "relative")}
+              aria-label="Wishlist"
+            >
+              <Heart className="h-5 w-5 text-zinc-700 dark:text-zinc-300" />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-1 -right-1 h-4 min-w-4 px-1 rounded-full bg-emerald-600 text-[10px] font-bold text-white flex items-center justify-center">
+                  {wishlistCount}
+                </span>
+              )}
             </Link>
 
             {/* Cart Link */}
-            <Link href="/cart">
-              <Button variant="ghost" size="icon" className="relative" aria-label="Shopping Cart">
-                <ShoppingBag className="h-5 w-5 text-zinc-700 dark:text-zinc-300" />
-                {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 h-4 min-w-4 px-1 rounded-full bg-emerald-600 text-[10px] font-bold text-white flex items-center justify-center">
-                    {cartCount}
-                  </span>
-                )}
-              </Button>
+            <Link
+              href="/cart"
+              className={cn(buttonVariants({ variant: "ghost", size: "icon" }), "relative")}
+              aria-label="Shopping Cart"
+            >
+              <ShoppingBag className="h-5 w-5 text-zinc-700 dark:text-zinc-300" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 h-4 min-w-4 px-1 rounded-full bg-emerald-600 text-[10px] font-bold text-white flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
             </Link>
 
             {/* User Account / Auth */}
             {currentUser ? (
               <div className="flex items-center gap-2 pl-2 border-l border-zinc-200 dark:border-zinc-800">
                 {(currentUser.role === "ADMIN" || currentUser.role === "SUPER_ADMIN") && (
-                  <Link href="/admin">
-                    <Button variant="outline" size="sm" className="hidden sm:inline-flex items-center gap-1.5 text-xs text-amber-600 dark:text-amber-400 border-amber-300 dark:border-amber-800">
-                      <Shield className="h-3.5 w-3.5" />
-                      <span>Admin</span>
-                    </Button>
+                  <Link
+                    href="/admin"
+                    className={cn(
+                      buttonVariants({ variant: "outline", size: "sm" }),
+                      "hidden sm:inline-flex items-center gap-1.5 text-xs text-amber-600 dark:text-amber-400 border-amber-300 dark:border-amber-800"
+                    )}
+                  >
+                    <Shield className="h-3.5 w-3.5" />
+                    <span>Admin</span>
                   </Link>
                 )}
-                <Link href="/account">
-                  <Button variant="ghost" size="sm" className="text-xs font-semibold">
-                    {currentUser.firstName}
-                  </Button>
+                <Link
+                  href="/account"
+                  className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "text-xs font-semibold")}
+                >
+                  {currentUser.firstName}
                 </Link>
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={handleLogout}
                   aria-label="Logout"
-                  className="text-zinc-500 hover:text-red-600"
+                  className="text-zinc-500 hover:text-red-600 cursor-pointer"
                 >
                   <LogOut className="h-4 w-4" />
                 </Button>
               </div>
             ) : (
               <div className="flex items-center gap-2 pl-2 border-l border-zinc-200 dark:border-zinc-800">
-                <Link href="/login">
-                  <Button variant="ghost" size="sm" className="text-xs font-medium">
-                    Sign In
-                  </Button>
+                <Link
+                  href="/login"
+                  className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "text-xs font-medium")}
+                >
+                  Sign In
                 </Link>
-                <Link href="/register">
-                  <Button size="sm" className="hidden sm:inline-flex text-xs">
-                    Register
-                  </Button>
+                <Link
+                  href="/register"
+                  className={cn(buttonVariants({ size: "sm" }), "hidden sm:inline-flex text-xs")}
+                >
+                  Register
                 </Link>
               </div>
             )}

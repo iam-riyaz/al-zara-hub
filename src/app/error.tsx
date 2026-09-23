@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { AlertCircle } from "lucide-react";
 
 export default function GlobalError({
@@ -31,8 +31,8 @@ export default function GlobalError({
         <Button onClick={() => reset()} variant="outline">
           Try Again
         </Button>
-        <Link href="/">
-          <Button>Back to Home</Button>
+        <Link href="/" className={buttonVariants()}>
+          Back to Home
         </Link>
       </div>
     </div>

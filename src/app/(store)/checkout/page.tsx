@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ShieldCheck, Truck, CreditCard, Tag, CheckCircle2, AlertCircle, ShoppingBag, ArrowLeft } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/features/cart/cart-context";
 
@@ -164,8 +164,8 @@ export default function CheckoutPage() {
     return (
       <div className="max-w-7xl mx-auto px-4 py-20 text-center space-y-4">
         <h2 className="text-xl font-bold">Your cart is empty</h2>
-        <Link href="/products">
-          <Button size="sm">Browse Products</Button>
+        <Link href="/products" className={buttonVariants({ size: "sm" })}>
+          Browse Products
         </Link>
       </div>
     );

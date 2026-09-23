@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { ShoppingBag } from "lucide-react";
 
 export default function NotFound() {
@@ -15,10 +16,8 @@ export default function NotFound() {
         The merchandise, collection, or page you are searching for does not exist or has been relocated.
       </p>
       <div className="pt-2">
-        <Link href="/">
-          <Button size="lg" className="font-semibold">
-            Return to Storefront
-          </Button>
+        <Link href="/" className={cn(buttonVariants({ size: "lg" }), "font-semibold")}>
+          Return to Storefront
         </Link>
       </div>
     </div>

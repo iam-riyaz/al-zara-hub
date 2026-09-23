@@ -3,8 +3,8 @@
 import * as React from "react";
 import Link from "next/link";
 import { Heart, ShoppingBag, Trash2, ArrowRight } from "lucide-react";
-import { formatPrice } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { formatPrice, cn } from "@/lib/utils";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { useCart } from "@/features/cart/cart-context";
 import { useWishlist } from "@/features/wishlist/wishlist-context";
 
@@ -96,10 +96,11 @@ export default function WishlistPage() {
           Save pieces you love to track pricing and purchase later when you&apos;re ready.
         </p>
         <div className="pt-2">
-          <Link href="/products">
-            <Button size="lg" className="font-semibold">
-              Discover Products
-            </Button>
+          <Link
+            href="/products"
+            className={cn(buttonVariants({ size: "lg" }), "font-semibold")}
+          >
+            Discover Products
           </Link>
         </div>
       </div>

@@ -3,8 +3,8 @@ import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth/session";
 import { prisma } from "@/lib/db/prisma";
 import { User, Package, MapPin, Heart, Shield, ArrowRight } from "lucide-react";
-import { formatPrice, formatDate } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { formatPrice, formatDate, cn } from "@/lib/utils";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 export default async function AccountPage() {
   const user = await getCurrentUser();
@@ -32,11 +32,12 @@ export default async function AccountPage() {
           <p className="text-xs text-zinc-500">Welcome back, {user.firstName} {user.lastName}</p>
         </div>
         {(user.role === "ADMIN" || user.role === "SUPER_ADMIN") && (
-          <Link href="/admin">
-            <Button variant="outline" className="text-amber-600 dark:text-amber-400 border-amber-300 dark:border-amber-800 gap-1.5 text-xs font-semibold">
-              <Shield className="h-4 w-4" />
-              <span>Open Admin Dashboard</span>
-            </Button>
+          <Link
+            href="/admin"
+            className={cn(buttonVariants({ variant: "outline" }), "text-amber-600 dark:text-amber-400 border-amber-300 dark:border-amber-800 gap-1.5 text-xs font-semibold")}
+          >
+            <Shield className="h-4 w-4" />
+            <span>Open Admin Dashboard</span>
           </Link>
         )}
       </div>
@@ -139,10 +140,11 @@ export default async function AccountPage() {
 
                 <div className="flex items-center justify-between sm:justify-end gap-6">
                   <span className="text-sm font-bold text-zinc-900 dark:text-white">{formatPrice(Number(o.totalAmount))}</span>
-                  <Link href={`/account/orders/${o.id}`}>
-                    <Button variant="outline" size="sm" className="text-xs">
-                      View Details
-                    </Button>
+                  <Link
+                    href={`/account/orders/${o.id}`}
+                    className={cn(buttonVariants({ variant: "outline", size: "sm" }), "text-xs")}
+                  >
+                    View Details
                   </Link>
                 </div>
               </div>

@@ -2,8 +2,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth/session";
 import { prisma } from "@/lib/db/prisma";
-import { formatPrice, formatDate } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { formatPrice, formatDate, cn } from "@/lib/utils";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Package, ArrowLeft, ArrowRight } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -44,8 +44,8 @@ export default async function OrdersHistoryPage() {
           <p className="text-xs text-zinc-500 max-w-sm mx-auto">
             You have not placed any orders yet. Discover our curated collections to place your first order.
           </p>
-          <Link href="/products" className="inline-block pt-2">
-            <Button size="sm">Browse Products</Button>
+          <Link href="/products" className={cn(buttonVariants({ size: "sm" }), "inline-block pt-2")}>
+            Browse Products
           </Link>
         </div>
       ) : (
@@ -85,11 +85,12 @@ export default async function OrdersHistoryPage() {
                     {formatPrice(Number(order.totalAmount))}
                   </p>
                 </div>
-                <Link href={`/account/orders/${order.id}`}>
-                  <Button variant="outline" size="sm" className="gap-1 text-xs">
-                    <span>Order Details</span>
-                    <ArrowRight className="h-3.5 w-3.5" />
-                  </Button>
+                <Link
+                  href={`/account/orders/${order.id}`}
+                  className={cn(buttonVariants({ variant: "outline", size: "sm" }), "gap-1 text-xs")}
+                >
+                  <span>Order Details</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
             </div>
