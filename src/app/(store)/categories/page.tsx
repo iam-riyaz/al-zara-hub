@@ -3,7 +3,12 @@ import { CategoryService } from "@/features/categories/category.service";
 import { ArrowRight, Layers } from "lucide-react";
 
 export default async function CategoriesPage() {
-  const tree = await CategoryService.getTree();
+  let tree: any[] = [];
+  try {
+    tree = await CategoryService.getTree();
+  } catch (error) {
+    console.warn("Notice: Database unreachable during categories page pre-render.");
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-12">

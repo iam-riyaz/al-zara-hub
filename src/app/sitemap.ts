@@ -4,16 +4,25 @@ import { prisma } from "@/lib/db/prisma";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
-  const [products, categories] = await Promise.all([
-    prisma.product.findMany({
-      where: { status: "ACTIVE" },
-      select: { slug: true, updatedAt: true },
-    }),
-    prisma.category.findMany({
-      where: { status: "ACTIVE" },
-      select: { slug: true, updatedAt: true },
-    }),
-  ]);
+  let products: { slug: string; updatedAt: Date }[] = [];
+  let categories: { slug: string; updatedAt: Date }[] = [];
+
+  try {
+    const [p, c] = await Promise.all([
+      prisma.product.findMany({
+        where: { status: "ACTIVE" },
+        select: { slug: true, updatedAt: true },
+      }),
+      prisma.category.findMany({
+        where: { status: "ACTIVE" },
+        select: { slug: true, updatedAt: true },
+      }),
+    ]);
+    products = p;
+    categories = c;
+  } catch (error) {
+    console.warn("Notice: Database unreachable during sitemap generation. Using static routes fallback.");
+  }
 
   const productUrls: MetadataRoute.Sitemap = products.map((p) => ({
     url: `${baseUrl}/products/${p.slug}`,

@@ -9,10 +9,19 @@ import { ArrowRight, Sparkles, Star, Zap, Shield, Heart } from "lucide-react";
 export const revalidate = 60; // ISR cache revalidation every 60s
 
 export default async function HomePage() {
-  const [featuredProducts, categories] = await Promise.all([
-    ProductService.getFeatured(8),
-    CategoryService.getAll(),
-  ]);
+  let featuredProducts: any[] = [];
+  let categories: any[] = [];
+
+  try {
+    const [fp, cats] = await Promise.all([
+      ProductService.getFeatured(8),
+      CategoryService.getAll(),
+    ]);
+    featuredProducts = fp;
+    categories = cats;
+  } catch (error) {
+    console.warn("Notice: Database unreachable during home page pre-render. Will populate dynamically on request.");
+  }
 
   const rootCategories = categories.filter((c) => !c.parent).slice(0, 4);
 
