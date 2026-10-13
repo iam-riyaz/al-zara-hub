@@ -13,11 +13,11 @@ export const metadata: Metadata = {
   keywords: ["e-commerce", "headphones", "laptops", "fashion", "smart home", "audio", "al-zara"],
   authors: [{ name: "Al-Zara Architecture Team" }],
 };
-
+ 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 5,
+  maximumScale: 6,
 };
 
 export default async function RootLayout({
