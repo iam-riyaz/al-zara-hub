@@ -6,7 +6,7 @@ import { NotFoundError } from "@/lib/errors/AppError";
 export class ProductService {
   static async list(params: ProductFilterParams): Promise<PaginatedResult<any>> {
     const page = Math.max(1, params.page || 1);
-    const limit = Math.min(50, Math.max(1, params.limit || 12));
+    const limit = Math.min(100, Math.max(1, params.limit || 12));
     const skip = (page - 1) * limit;
 
     const where: Prisma.ProductWhereInput = {

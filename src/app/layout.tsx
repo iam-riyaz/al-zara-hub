@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/shared/theme-provider";
+import { StoreProvider } from "@/components/providers/store-provider";
+import { QueryProvider } from "@/components/providers/query-provider";
 import { CartProvider } from "@/features/cart/cart-context";
 import { WishlistProvider } from "@/features/wishlist/wishlist-context";
 import { Header } from "@/components/storefront/header";
@@ -31,13 +33,17 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 flex flex-col font-sans antialiased selection:bg-emerald-500 selection:text-white" suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <CartProvider>
-            <WishlistProvider>
-              <Header currentUser={currentUser} />
-              <main className="flex-1">{children}</main>
-              <Footer />
-            </WishlistProvider>
-          </CartProvider>
+          <StoreProvider>
+            <QueryProvider>
+              <CartProvider>
+                <WishlistProvider>
+                  <Header currentUser={currentUser} />
+                  <main className="flex-1">{children}</main>
+                  <Footer />
+                </WishlistProvider>
+              </CartProvider>
+            </QueryProvider>
+          </StoreProvider>
         </ThemeProvider>
       </body>
     </html>
