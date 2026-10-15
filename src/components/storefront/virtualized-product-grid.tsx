@@ -44,7 +44,7 @@ export function VirtualizedProductGrid({
       if (width < 640) {
         setColumnCount(1);
       } else if (width < 1280) {
-        setColumnCount(2);
+        setColumnCount(3);
       } else {
         setColumnCount(3);
       }
