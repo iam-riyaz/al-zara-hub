@@ -26,6 +26,7 @@ export function Header({ currentUser }: HeaderProps) {
   const { wishlistCount } = useWishlist();
   const [searchQuery, setSearchQuery] = React.useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [isPromoRemoved, setIsPromoRemoved] = React.useState(false);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,10 +44,13 @@ export function Header({ currentUser }: HeaderProps) {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md">
       {/* Top Banner */}
+      {!isPromoRemoved && (
       <div className="bg-emerald-700 text-white text-xs font-medium py-1.5 px-4 text-center tracking-wide">
-        Free Worldwide Express Shipping on Orders Over $150 • Use Code: <span className="font-bold underline">WELCOME10</span>
+        Free Worldwide Express Shipping on Orders Over ₹10000 • Use Code: <span className="font-bold underline">WELCOME10</span> 
       </div>
+)}
 
+      <div className="font-bold -mt-7 px-2 flex justify-end text-white"><button className="cursor-pointer" onClick={()=>{setIsPromoRemoved(true)}}>X</button></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 gap-4">
           {/* Logo */}

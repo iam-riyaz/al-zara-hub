@@ -74,7 +74,7 @@ export default async function HomePage() {
                   <p className="text-xs text-zinc-500">Verified Reviews</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">$0.00</p>
+                  <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">₹0.00</p>
                   <p className="text-xs text-zinc-500">100% Free Stack</p>
                 </div>
               </div>
@@ -105,7 +105,7 @@ export default async function HomePage() {
                     Studio-grade titanium drivers with 45-hour playback, multipoint pairing, and cloud-soft memory foam.
                   </p>
                   <div className="pt-2 flex items-center justify-between">
-                    <span className="text-xl font-bold text-zinc-900 dark:text-white">$299.99</span>
+                    <span className="text-xl font-bold text-zinc-900 dark:text-white">₹299.99</span>
                     <Link
                       href="/products/aura-pro-wireless-anc-headphones"
                       className={cn(buttonVariants({ size: "sm" }), "text-xs font-semibold")}
