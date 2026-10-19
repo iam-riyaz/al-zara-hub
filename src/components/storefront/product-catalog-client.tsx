@@ -335,6 +335,7 @@ export function ProductCatalogClient({
               throttleIntervalMs={throttleIntervalMs}
             />
           )}
+          
         </section>
       </div>
     </div>
