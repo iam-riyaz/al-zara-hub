@@ -334,7 +334,8 @@ export function ProductCatalogClient({
               onRetry={refetch}
               throttleIntervalMs={throttleIntervalMs}
             />
-          )}
+          )} 
+          
         </section>
       </div>
     </div>
