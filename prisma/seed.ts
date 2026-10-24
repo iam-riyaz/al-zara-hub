@@ -1,5 +1,6 @@
 import { PrismaClient, Role, UserStatus, AddressType, CategoryStatus, ProductStatus, VariantStatus, DiscountType, OrderStatus, PaymentStatus, PaymentProviderType, ReviewStatus, InventoryTransactionType } from "@prisma/client";
 import { hashPassword } from "../src/lib/auth/password";
+import { generateRealisticProducts } from "./seed-products";
 
 const prisma = new PrismaClient();
 
@@ -1480,6 +1481,10 @@ async function main() {
       },
     ],
   });
+
+  // 9. Generate realistic large product catalog for virtualization
+  console.log("Seeding realistic product catalog for virtualization...");
+  await generateRealisticProducts(1800);
 
   console.log("✅ Database seeded successfully!");
   console.log("--------------------------------------------------");
