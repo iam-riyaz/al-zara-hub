@@ -1121,7 +1121,6 @@ async function main() {
 
     seededProducts.push(createdProduct);
   }
-
   // 5. Seed Coupons
   console.log("Seeding coupons...");
   const couponWelcome = await prisma.coupon.create({

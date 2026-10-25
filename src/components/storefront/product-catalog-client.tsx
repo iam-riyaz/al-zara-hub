@@ -42,6 +42,8 @@ export function ProductCatalogClient({
     (state) => state.ui.throttleIntervalMs
   );
 
+  
+
   // Read latest query parameters from URL searchParams
   const category = searchParams.get("category") || initialParams.category || undefined;
   const search = searchParams.get("search") || initialParams.search || undefined;
